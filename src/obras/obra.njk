@@ -1,0 +1,17 @@
+---
+layout: base.njk
+nav: gallery
+pagination:
+  data: works
+  size: 1
+  alias: work
+permalink: "obras/{{ work.slug }}/index.html"
+eleventyComputed:
+  title: "{{ work.title }} — {{ work.artist }}"
+  description: "{{ work.intro }}"
+---
+<div class="detail-breadcrumb"><a href="{{ '/' | url }}">A coleção</a><span aria-hidden="true">/</span><span>{{ work.title }}</span></div>
+<section class="work-detail"><div class="work-stage" style="--paper:{{ work.color }}"><img src="{{ ('/images/' + work.id + '-1600.webp') | url }}" width="{{ work.width }}" height="{{ work.height }}" alt="{{ work.alt }}" fetchpriority="high"><button class="expand-art" @click="open('viewer','{{ work.id }}')" x-cloak>Olhar de perto <span aria-hidden="true">⤢</span></button><span class="stage-caption">{{ work.artist }} / {{ work.date }}</span></div><div class="work-info"><p class="eyebrow">{{ work.theme }} <span class="detail-dot">·</span> COLEÇÃO ABERTA</p><h1>{{ work.title }}</h1><p class="work-artist">{{ work.artist }}<span>{{ work.date }}</span></p><p class="work-intro">{{ work.intro }}</p><dl class="work-facts"><div><dt>Técnica</dt><dd>{{ work.medium }}</dd></div><div><dt>Dimensões</dt><dd>{{ work.size }}</dd></div><div><dt>Origem do artista</dt><dd>{{ work.country }}</dd></div><div><dt>Acervo original</dt><dd>Cleveland Museum of Art</dd></div></dl><button class="primary" @click="$store.archive.toggle('{{ work.id }}')" :aria-pressed="$store.archive.has('{{ work.id }}')" x-cloak><span x-text="$store.archive.has('{{ work.id }}')?'Obra na sua seleção':'Guardar na minha seleção'">Guardar na minha seleção</span>{% include 'bookmark.svg' %}</button><div class="detail-actions" x-cloak><button class="underlined" @click="open('note','{{ work.id }}')">Anotar um olhar ↗</button><button class="underlined" @click="$store.archive.toggleCompare('{{ work.id }}')" :aria-pressed="$store.archive.compare.includes('{{ work.id }}')">Comparar ⇄</button></div><a class="source-link" href="{{ work.source }}" target="_blank" rel="noreferrer">Ver registro original no museu ↗</a></div></section>
+<section class="curatorial"><div><span class="eyebrow">LEITURA DO ACERVO</span><p class="reading-index">0{{ pagination.pageNumber + 1 }}<span>/09</span></p></div><div class="curatorial-copy"><h2>Um convite a<br><em>perceber.</em></h2><p>{{ work.reading }}</p><p>{{ work.detail }}</p><blockquote>{{ work.question }}</blockquote><p class="editorial-note">Uma leitura possível, escrita para esta galeria. Sua interpretação pode seguir outro caminho.</p></div></section>
+<section class="personal-note" x-show="$store.archive.notes['{{ work.id }}']" x-cloak><span class="eyebrow">O QUE VOCÊ GUARDOU DESTA OBRA</span><p x-text="$store.archive.notes['{{ work.id }}']"></p><button class="underlined" @click="open('note','{{ work.id }}')">Editar minha nota ↗</button></section>
+<section class="related"><div class="section-heading"><h2>Outros <em>encontros.</em></h2><a class="text-link" href="{{ '/' | url }}">Toda a coleção ↗</a></div><div class="related-grid">{% for item in works | related(work) %}<article><a href="{{ ('/obras/' + item.slug + '/') | url }}"><div class="related-image" style="background:{{ item.color }}"><img src="{{ ('/images/' + item.id + '-640.webp') | url }}" width="{{ item.width }}" height="{{ item.height }}" alt="{{ item.alt }}" loading="lazy"></div><p class="artist">{{ item.artist }}</p><h3>{{ item.title }}</h3><span>{{ item.date }}</span></a></article>{% endfor %}</div></section>

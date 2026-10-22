@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.local
+.DS_Store
+docs/original-*.jpg
+docs/source-candidates.json
+docs/museum-source.json

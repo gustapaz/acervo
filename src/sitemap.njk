@@ -1,0 +1,6 @@
+---
+permalink: sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>{{ site.url }}/</loc></url><url><loc>{{ site.url }}/cadernos/</loc></url><url><loc>{{ site.url }}/sobre/</loc></url>{% for work in works %}<url><loc>{{ site.url }}/obras/{{ work.slug }}/</loc></url>{% endfor %}{% for essay in essays %}<url><loc>{{ site.url }}/cadernos/{{ essay.slug }}/</loc></url>{% endfor %}</urlset>

@@ -1,0 +1,13 @@
+---
+layout: base.njk
+nav: journal
+pagination:
+  data: essays
+  size: 1
+  alias: essay
+permalink: "cadernos/{{ essay.slug }}/index.html"
+eleventyComputed:
+  title: "{{ essay.title }}"
+  description: "{{ essay.subtitle }}"
+---
+<article class="essay-detail" x-data="reader" :style="'--reading-scale:'+size"><div class="reading-progress" :style="'width:'+progress+'%'" aria-hidden="true"></div><div class="detail-breadcrumb"><a href="{{ '/cadernos/' | url }}">Cadernos</a><span aria-hidden="true">/</span><span>Anotação {{ essay.number }}</span></div><header class="essay-header"><p class="eyebrow">{{ essay.category }} <span>·</span> ANOTAÇÃO {{ essay.number }}</p><h1>{{ essay.title }}</h1><p>{{ essay.subtitle }}</p><div class="reader-tools"><span>POR ACERVO · LEITURA SEM PRESSA</span><div role="group" aria-label="Tamanho do texto" x-cloak><button @click="size=1" :aria-pressed="size===1" aria-label="Texto em tamanho padrão">A</button><button @click="size=1.15" :aria-pressed="size===1.15" aria-label="Texto em tamanho maior">A+</button><button @click="size=1.3" :aria-pressed="size===1.3" aria-label="Texto em tamanho máximo">A++</button></div></div></header><figure class="essay-hero"><img src="{{ ('/images/' + essay.image + '-1600.webp') | url }}" alt="{{ (works | findWork(essay.image)).alt }}" width="{{ (works | findWork(essay.image)).width }}" height="{{ (works | findWork(essay.image)).height }}" fetchpriority="high"><figcaption>{{ (works | findWork(essay.image)).title }} · {{ (works | findWork(essay.image)).artist }} · Cleveland Museum of Art / CC0</figcaption></figure><div class="essay-copy"><p class="essay-lead">{{ essay.intro }}</p>{% for section in essay.sections %}<section><h2>{{ section.title }}</h2>{% for p in section.paragraphs %}<p>{{ p }}</p>{% endfor %}</section>{% endfor %}<blockquote>{{ essay.question }}</blockquote><p class="editorial-note">Texto autoral e interpretativo desta galeria demonstrativa.</p><a class="primary" href="{{ ('/obras/' + essay.work + '/') | url }}">Continue diante da obra <span aria-hidden="true">↗</span></a></div></article><section class="next-read"><span class="eyebrow">AINDA HÁ OUTROS CAMINHOS</span><a href="{{ '/cadernos/' | url }}">Voltar aos cadernos <span aria-hidden="true">↗</span></a></section>
